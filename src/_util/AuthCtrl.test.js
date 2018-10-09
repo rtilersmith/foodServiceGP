@@ -20,6 +20,6 @@ describe.skip("Auth0 tests", ()=>{
 	// 		})
 	// 	);
 	// 	const auth0 =  await AuthCtrl.auth(req, res)
-	// 	expect(res.redirect).toHaveBeenCalledWith("/#/favorites")
+	// 	expect(res.redirect).toHaveBeenCalledWith("/favorites")
 	// })
 })
