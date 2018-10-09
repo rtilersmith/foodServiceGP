@@ -2,11 +2,11 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const massive = require('massive')
-// const request = require('request')
 
 const FavsCtrl = require('./Controllers/FavsCtrl')
 const RestCtrl = require('./Controllers/RestCtrl')
 const AuthCtrl = require('./Controllers/AuthCtrl')
+const path = require('path')
 
 require('dotenv').config()
 
@@ -17,6 +17,8 @@ massive(process.env.CONNECTION_SESSION).then(db => {
     app.set('db', db)
     console.log(`Never gonna run around and desert db!`)
 }).catch(err => console.log(err))
+
+app.use( express.static( `${__dirname}/../build` ) );
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -34,6 +36,11 @@ app.use((req, res, next) => {
     }
     next()
 })
+
+
+app.get('*', (req, res)=>{
+    res.sendFile(path.join(__dirname, '../build/index.html'));
+});
 
 //Auth
 app.get('/auth/callback', AuthCtrl.auth)
